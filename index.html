@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <title>Crystal Collector</title>
+</head>
+<body>
+    <div class="container" style="background-color: black;">
+
+            <div class="jumbotron" style="background-color: blueviolet; color: black;" >
+                    <h1 class="text-center">Crystal Colector</h1>
+           </div>  
+
+<div class="row"></div>
+
+<div class="col-lg-12">
+
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+            <h3 class="panel-title text-center">Instructions</h3>
+      </div>
+      <div class="panel-body">
+     <p><small>You will be given a random number at the begining of the game. The objective of the game is to match that number using the crystals provided. You will do this by clicking on each crystal. The crystals will have random values that change each time the game restarts. each time you click on a crystal the value of that crystal will be added to you. Kind of like Blackjack. See if you can match the value.</small></p> 
+      </div>
+   </div>
+</div>
+<div class="row">
+
+<div class="col-lg-3">
+
+<div class="panel panel-primary">
+      <div class="panel-heading">
+            <h3 class="panel-title text-center">Target score</h3>
+      </div>
+      <div class="panel-body" id="targetScore">
+            <h3 class="text-center"><strong></strong></h3>
+      </div>
+  </div>
+</div>
+<div class="col-lg-3">
+
+        <div class="panel panel-primary">
+              <div class="panel-heading">
+                    <h3 class="panel-title text-center">Your score</h3>
+              </div>
+              <div class="panel-body" id="yourScore">
+                    <h3 class="text-center"><strong></strong></h3>
+              </div>
+        </div>
+    </div>
+
+  <div class="col-lg-6">
+        <div class="panel panel-primary">
+                <div class="panel-heading">
+                      <h3 class="panel-title text-center">Your selection </h3>
+                </div>
+                <div class="panel-body" class="text-center">
+                      <h3 class="text-center"></h3>
+                      <img src="/Users/jaredcole-lewis/Desktop/Crystal Game/assets.html/crystal 1.jpg" id="white">
+                      <img src="/Users/jaredcole-lewis/Desktop/Crystal Game/assets.html/Crystal 5.jpg" id="purple" style="padding-left: 30px">
+                      <img src="/Users/jaredcole-lewis/Desktop/Crystal Game/assets.html/crystal 3.jpg" id="lightBlue" style="padding-left: 30px">
+                      <img src="/Users/jaredcole-lewis/Desktop/Crystal Game/assets.html/crystal 4.jpg" id="blue" style="padding-left: 60px">
+                </div>
+          </div>
+
+  </div>      
+
+  <div class="row">
+
+<div class="col-lg-6">
+
+        <div class="panel panel-primary">
+                <div class="panel-heading">
+                      <h3 class="panel-title text-center" id="winCount">Win Count</h3>
+                </div>
+                <div class="panel-body">
+                      <h3 class="text-center"><strong>0</strong></h3>
+                </div>
+        
+      </div>
+
+</div>
+
+<div class="col-lg-6">
+
+        <div class="panel panel-primary">
+                <div class="panel-heading">
+                      <h3 class="panel-title text-center" id="lossCount">Loss Count</h3>
+                </div>
+                <div class="panel-body">
+                      <h3 class="text-center">0</h3>
+                </div>
+          
+      </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+
+</div>
+<script>
+
+var crystal = {
+white:
+{
+name: "white",
+value: 0
+},
+purple:
+{
+name: "purple",
+value: 0
+},
+lightBlue:
+{
+name: "lightBlue",
+value: 0
+},
+blue:
+{
+ name: "blue",
+ value: 0   
+}
+
+};
+
+var currentScore = 0;
+var targetScore = 0;
+
+var winCount = 0;
+var lossCount = 0;
+
+var startGame = function(){
+var currentScore= 0;
+
+var getRandom = function(min, max) {
+ return Math.floor(Math.random() * (max - min + 1)) + min;
+
+
+}
+
+targetScore = getRandom(19, 120);
+
+crystal.white.value= getRandom(1, 12);
+crystal.purple.value= getRandom(1, 12);
+crystal.lightBlue.value= getRandom(1, 12);
+crystal.blue.value= getRandom(1, 12);
+
+
+$("#yourScore").html(currentScore);
+$("#targetScore").html(targetScore);
+
+console.log("targetscore:" + targetScore)
+console.log("white:" + crystal.white.value, "purple:" + crystal.purple.value, "lightBlue:" + crystal.lightBlue.value, "blue:" + crystal.blue.value );
+}
+
+var addValues = function(crystal) {
+
+currentScore = currentScore + crystal.value;
+
+$("#yourScore").html(currentScore);
+
+checkWin();
+
+console.log("Your Score:" + currentScore);
+
+}
+
+var checkWin = function() {
+
+if(currentScore > targetScore) {
+   alert("You Lose");
+   console.log("you lose");
+
+   lossCount++;
+
+   $("#lossCount").html(lossCount);
+
+   startGame();
+
+}
+else if (currentScore == targetScore) {
+    alert("you win")
+    console.log("you win");
+
+    winCount++;
+
+    $("#lossCount").html(lossCount);
+    
+    startGame();
+}
+}
+
+startGame();
+
+$("#white").click(function(){
+ addValues(crystal.white);
+});
+
+$("#purple").click(function(){
+addValues(crystal.purple);
+});
+
+$("#lightBlue").click(function(){
+addValues(crystal.lightBlue);
+});
+
+$("#blue").click(function(){
+addValues(crystal.blue);
+});
+
+</script>
+    
+</body>
+</html>
